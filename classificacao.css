@@ -1,0 +1,294 @@
+/* =========================
+   VARIÁVEIS DE TEMA
+========================= */
+
+:root {
+  --primary-gradient: linear-gradient(to right, #000000, #D62828);
+  --secondary-bg: #0f0f0f;
+  --accent-color: #ffffff;
+  --text-color: #ffffff;
+  --hover-color: #D62828;
+  --highlight-color: #ffcc00;
+  --app-gradient: linear-gradient(135deg, #0041A8, #000000, #D62828);
+  --icon-border-color: #da5252;
+  --font-family: "Oswald", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* =========================
+   RESET & BASE
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--secondary-bg);
+  color: var(--text-color);
+  line-height: 1.4;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+  background: var(--primary-gradient);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.brand h1 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: .5px;
+  color: var(--highlight-color);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 18px;
+}
+
+nav a {
+  text-decoration: none;
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  opacity: .75;
+  transition: opacity .2s ease, color .2s ease;
+}
+
+nav a:hover {
+  opacity: 1;
+  color: var(--highlight-color);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 18px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+}
+
+/* =========================
+   TÍTULOS
+========================= */
+
+section > header h2 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+  color: var(--highlight-color);
+}
+
+/* =========================
+   TABELA
+========================= */
+
+.table-wrapper {
+  background: #111;
+  border-radius: 14px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.65);
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* ESSENCIAL */
+}
+
+thead {
+  background: var(--app-gradient);
+}
+
+th,
+td {
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+th {
+  padding: 8px 6px;
+  font-size: .85rem;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  color: var(--accent-color);
+}
+
+td {
+  padding: 6px 4px;
+  font-size: .9rem;
+  border-top: 1px solid rgba(255,255,255,.12);
+  color: var(--text-color);
+}
+
+tbody tr:nth-child(even) {
+  background: rgba(255,255,255,.04);
+}
+
+tbody tr:nth-child(odd) {
+  background: rgba(255,255,255,.07);
+}
+
+tbody tr:hover {
+  background: rgba(214,40,40,.25);
+}
+
+/* =========================
+   CARDS (RANKING)
+========================= */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.cards > div {
+  background: var(--app-gradient);
+  border-radius: 20px;
+  padding: 18px 16px 20px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.65);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.cards > div:hover {
+  transform: translateY(-6px) scale(1.025);
+  box-shadow: 0 18px 40px rgba(0,0,0,.85);
+}
+
+/* Top 3 */
+.cards .top-1 {
+  border: 2px solid var(--highlight-color);
+  box-shadow: 0 0 22px rgba(255,204,0,.45);
+}
+
+.cards .top-2 {
+  border: 2px solid #c0c0c0;
+}
+
+.cards .top-3 {
+  border: 2px solid #cd7f32;
+}
+
+/* =========================
+   PROGRESS BAR
+========================= */
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: rgba(255,255,255,.12);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--hover-color), var(--highlight-color));
+  border-radius: 12px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+  margin-top: 40px;
+  padding: 20px;
+  text-align: center;
+  font-size: .8rem;
+  opacity: .6;
+}
+
+/* =========================
+   RESPONSIVO – TABLET
+========================= */
+
+@media (max-width: 768px) {
+
+  header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  main {
+    padding: 20px 14px 40px;
+  }
+}
+
+/* =========================
+   RESPONSIVO – MOBILE (TABELA INTEIRA)
+========================= */
+
+@media (max-width: 600px) {
+
+  table {
+    font-size: .7rem;
+  }
+
+  th {
+    font-size: .65rem;
+    padding: 4px 3px;
+    letter-spacing: .4px;
+  }
+
+  td {
+    font-size: .65rem;
+    padding: 3px 2px;
+  }
+
+  /* Coluna principal (nome) */
+  th:nth-child(2),
+  td:nth-child(2) {
+    text-align: left;
+    padding-left: 4px;
+    width: 30%;
+  }
+
+  /* Colunas numéricas */
+  th:not(:nth-child(2)),
+  td:not(:nth-child(2)) {
+    width: calc(70% / 6);
+  }
+}
+
+/* =========================
+   MOBILE EXTREMO
+========================= */
+
+@media (max-width: 400px) {
+
+  th,
+  td {
+    font-size: .6rem;
+    padding: 2px 1px;
+  }
+
+  th {
+    letter-spacing: 0;
+  }
+}
