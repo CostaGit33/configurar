@@ -12,22 +12,34 @@ export async function apiRequest(endpoint, options = {}) {
     method: options.method || "GET",
     headers: {
       "Content-Type": "application/json",
+      "Accept": "application/json"
     },
   };
 
-  // Só adiciona body se existir (evita erro em GET)
   if (options.body) {
     config.body = JSON.stringify(options.body);
   }
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+  try {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+    
+    let data;
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+      data = await response.json();
+    } else {
+      data = { message: await response.text() };
+    }
 
-  if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || "Erro na comunicação com a API");
+    if (!response.ok) {
+      throw new Error(data.error || data.message || "Erro na comunicação com a API");
+    }
+
+    return data;
+  } catch (error) {
+    console.error(`Erro na requisição [${endpoint}]:`, error);
+    throw error;
   }
-
-  return response.json();
 }
 
 /* ======================================================
@@ -36,19 +48,8 @@ export async function apiRequest(endpoint, options = {}) {
 
 /**
  * Regra oficial de pontuação do FutPontos
- * - Vitória: +3
- * - Empate: +1
- * - Defesa: +1
- * - Gol: +2
- * - Infração: -2
  */
-export function calculatePoints(
-  vitorias = 0,
-  empates = 0,
-  defesas = 0,
-  gols = 0,
-  infracoes = 0
-) {
+export function calculatePoints(vitorias = 0, empates = 0, defesas = 0, gols = 0, infracoes = 0) {
   return (
     Number(vitorias) * 3 +
     Number(empates) +
@@ -63,56 +64,54 @@ export function calculatePoints(
 ====================================================== */
 
 export function showFeedback(message, type = "success") {
-  const container = document.getElementById("feedback");
-  if (!container) return;
-
-  container.innerHTML = "";
+  let container = document.getElementById("feedback");
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "feedback";
+    document.body.appendChild(container);
+  }
 
   const div = document.createElement("div");
   div.className = `feedback ${type}`;
   div.textContent = message;
 
   container.appendChild(div);
-
-  setTimeout(() => div.remove(), 3000);
+  setTimeout(() => {
+    div.style.opacity = "0";
+    setTimeout(() => div.remove(), 300);
+  }, 3000);
 }
 
 /* ======================================================
-   UX GLOBAL (MENU / FOOTER)
+   INICIALIZAÇÃO GLOBAL
 ====================================================== */
 
 function initGlobalUI() {
-
-  /* ===== MENU MOBILE ===== */
-  const menuButton = document.getElementById("menuButton");
-  const menu = document.getElementById("menu");
-
-  if (menuButton && menu) {
-    menuButton.addEventListener("click", () => {
-      menu.classList.toggle("visible");
+  // Menu Mobile
+  const menuToggle = document.querySelector(".menu-toggle");
+  const appNav = document.querySelector(".app-nav");
+  if (menuToggle && appNav) {
+    menuToggle.addEventListener("click", () => {
+      appNav.classList.toggle("active");
     });
   }
 
-  /* ===== LINK ATIVO ===== */
-  const currentPage = window.location.pathname.split("/").pop();
-  document.querySelectorAll("nav a").forEach(link => {
-    link.classList.toggle(
-      "active",
-      link.getAttribute("href") === currentPage
-    );
+  // Link Ativo
+  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+  document.querySelectorAll(".app-nav a").forEach(link => {
+    const href = link.getAttribute("href");
+    if (href === currentPage) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
   });
 
-  /* ===== FOOTER DINÂMICO ===== */
-  const footer = document.querySelector("footer");
+  // Footer Dinâmico
+  const footer = document.querySelector(".app-footer");
   if (footer) {
-    footer.innerHTML = `© ${new Date().getFullYear()} FutPontos`;
+    footer.innerHTML = `&copy; ${new Date().getFullYear()} FutPontos - Todos os direitos reservados.`;
   }
-
-  /* ===== LOG ===== */
-  console.info(
-    "%cFutPontos conectado à API",
-    "color:#ffcc00;font-weight:bold"
-  );
 }
 
 document.addEventListener("DOMContentLoaded", initGlobalUI);

@@ -4,114 +4,78 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FutPontos | Adicionar Jogador</title>
-
-  <!-- CSS -->
+  <link rel="stylesheet" href="common-nav.css">
   <link rel="stylesheet" href="adicionar.css">
-
-  <!-- Favicon (evita erro 404) -->
-  <link rel="icon" href="data:,">
 </head>
-
 <body>
 
-  <!-- ================= HEADER ================= -->
-  <header>
+  <header class="app-header">
     <div class="brand">
       <h1>FutPontos</h1>
     </div>
-
-    <nav>
+    <button class="menu-toggle" aria-label="Abrir menu">☰</button>
+    <nav class="app-nav">
       <ul>
         <li><a href="index.html">Classificação</a></li>
-        <li><a href="adicionar.html" class="active">Adicionar Jogador</a></li>
+        <li><a href="adicionar.html">Adicionar Jogador</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- ================= MAIN ================= -->
-  <main>
-
+  <main class="app-main">
     <section class="form-section">
-      <header>
+      <header class="section-header">
         <h2>➕ Novo Jogador</h2>
       </header>
 
       <form id="playerForm" class="player-form">
-
-        <!-- FOTO -->
         <div class="form-group">
           <label for="foto">Foto (URL ou nome do arquivo)</label>
-          <input
-            type="text"
-            id="foto"
-            name="foto"
-            placeholder="ex: joao.png ou https://..."
-          >
+          <input type="text" id="foto" name="foto" placeholder="ex: joao.png ou https://...">
         </div>
 
-        <!-- NOME -->
         <div class="form-group">
           <label for="nome">Nome do Jogador *</label>
-          <input
-            type="text"
-            id="nome"
-            name="nome"
-            placeholder="Nome completo"
-            required
-          >
+          <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
         </div>
 
-        <!-- ESTATÍSTICAS -->
         <div class="form-grid">
-
           <div class="form-group">
             <label for="gols">Gols</label>
             <input type="number" id="gols" name="gols" min="0" value="0">
           </div>
-
           <div class="form-group">
             <label for="vitorias">Vitórias</label>
             <input type="number" id="vitorias" name="vitorias" min="0" value="0">
           </div>
-
           <div class="form-group">
             <label for="empate">Empates</label>
             <input type="number" id="empate" name="empate" min="0" value="0">
           </div>
-
           <div class="form-group">
             <label for="defesa">Defesas</label>
             <input type="number" id="defesa" name="defesa" min="0" value="0">
           </div>
-
-          <!-- INFRAÇÕES -->
           <div class="form-group">
             <label for="infracoes">Infrações (−2 pts cada)</label>
             <input type="number" id="infracoes" name="infracoes" min="0" value="0">
           </div>
-
         </div>
 
-        <!-- AÇÕES -->
         <div class="form-actions">
           <button type="submit">Salvar Jogador</button>
           <button type="reset" class="secondary">Limpar</button>
         </div>
-
       </form>
-
-      <!-- FEEDBACK -->
-      <div id="feedback"></div>
-
     </section>
-
   </main>
 
-  <!-- ================= FOOTER ================= -->
-  <footer></footer>
+  <footer class="app-footer"></footer>
 
-  <!-- JS -->
-  <script src="adicionar.js" defer></script>
+  <div id="feedback" aria-live="polite"></div>
+
+  <script type="module" src="./globais.js"></script>
+  <script type="module" src="./adicionar.js"></script>
 
 </body>
 </html>

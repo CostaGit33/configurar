@@ -36,15 +36,15 @@ async function carregarClassificacao() {
     // Normaliza e calcula pontos
     jogadores.forEach(j => {
       j.vitorias   = Number(j.vitorias)   || 0;
-      j.empate     = Number(j.empate)     || 0;
-      j.defesa     = Number(j.defesa)     || 0;
+      j.empates    = Number(j.empate)     || 0; // API retorna 'empate'
+      j.defesas    = Number(j.defesa)     || 0; // API retorna 'defesa'
       j.gols       = Number(j.gols)       || 0;
       j.infracoes  = Number(j.infracoes)  || 0;
 
       j.pontos = calculatePoints(
         j.vitorias,
-        j.empate,
-        j.defesa,
+        j.empates,
+        j.defesas,
         j.gols,
         j.infracoes
       );
@@ -98,11 +98,11 @@ function renderTable(jogadores, tbody) {
     tr.innerHTML = `
       <td>${index + 1}</td>
       <td>${j.nome}</td>
-      <td>${j.pontos}</td>
+      <td><strong>${j.pontos}</strong></td>
       <td>${j.vitorias}</td>
       <td>${j.gols}</td>
-      <td>${j.defesa}</td>
-      <td>${j.empate}</td>
+      <td>${j.defesas}</td>
+      <td>${j.empates}</td>
     `;
 
     tbody.appendChild(tr);
@@ -148,8 +148,8 @@ function renderCards(jogadores, container) {
       <div class="player-stats">
         <span>🏆 ${j.vitorias}</span>
         <span>⚽ ${j.gols}</span>
-        <span>🧤 ${j.defesa}</span>
-        <span>🤝 ${j.empate}</span>
+        <span>🧤 ${j.defesas}</span>
+        <span>🤝 ${j.empates}</span>
       </div>
     `;
 
